@@ -1,7 +1,7 @@
 class Pokemon
     attr_accessor :name, :type, :db, :id
     
-    def initialize(id:nil, name:, type:, db:nil)
+    def initialize(id:nil, name:, type:, db:nil, hp:nil)
         @id = id
         @name = name
         @type = type       
@@ -19,5 +19,9 @@ class Pokemon
         p = db.execute(sql, id).flatten
         Pokemon.new(id: p[0], name: p[1], type: p[2], db: db)
     end
-end
 
+    def alter_hp(new_hp, db)
+        sql = "UPDATE pokemon SET hp = ? WHERE id = ?"
+        db.execute(sql, new_hp, self.id)
+    end
+end
